@@ -1,14 +1,14 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.function.BooleanSupplier;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task2 {
     WebDriver driver;
@@ -67,6 +67,13 @@ public class Task2 {
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(By.cssSelector(".button")).click();
         assertEquals("Поле обязательно для заполнения", driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText().trim());
+    }
+    @Test
+    void failedCheckboxTest() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Александр");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79170000000");
+        driver.findElement(By.cssSelector(".button")).click();
+        assertTrue(driver.findElement(By.cssSelector(".input_invalid")).isDisplayed());
     }
 
 }
